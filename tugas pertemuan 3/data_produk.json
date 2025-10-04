@@ -1,0 +1,66 @@
+{
+    "snack": [
+        {
+            "id": 1,
+            "nama": "Keripik Singkong Original",
+            "harga": 15000,
+            "stok": 50
+        },
+        {
+            "id": 2,
+            "nama": "Kacang Tanah Goreng",
+            "harga": 12000,
+            "stok": 30
+        },
+        {
+            "id": 3,
+            "nama": "Keripik Pisang Coklat",
+            "harga": 18000,
+            "stok": 25
+        },
+        {
+            "id": 4,
+            "nama": "Rempeyek Kacang",
+            "harga": 10000,
+            "stok": 40
+        },
+        {
+            "id": 5,
+            "nama": "Emping Melinjo",
+            "harga": 20000,
+            "stok": 20
+        }
+    ],
+    "drink": [
+        {
+            "id": 1,
+            "nama": "Es Teh Manis",
+            "harga": 5000,
+            "stok": 100
+        },
+        {
+            "id": 2,
+            "nama": "Jus Jeruk Segar",
+            "harga": 8000,
+            "stok": 50
+        },
+        {
+            "id": 3,
+            "nama": "Es Kelapa Muda",
+            "harga": 10000,
+            "stok": 35
+        },
+        {
+            "id": 4,
+            "nama": "Wedang Jahe",
+            "harga": 7000,
+            "stok": 60
+        },
+        {
+            "id": 5,
+            "nama": "Jus Alpukat",
+            "harga": 12000,
+            "stok": 30
+        }
+    ]
+}
