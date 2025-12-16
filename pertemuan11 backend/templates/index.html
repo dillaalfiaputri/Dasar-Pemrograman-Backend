@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD Flask</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-4">
+   <h2 class="mb-3 text-center">APOTIK</h2>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <!-- Tombol tambah (kiri) -->
+    <a href="/add" class="btn btn-primary">
+        Tambah Barang
+    </a>
+
+    <!-- Form cari (kanan) -->
+    <form method="GET" class="d-flex" style="width: 300px;">
+        <input 
+            type="text"
+            name="search"
+            class="form-control me-2"
+            placeholder="Cari kode / nama..."
+            value="{{ search }}"
+        >
+        <button class="btn btn-success">Cari</button>
+    </form>
+</div>
+
+
+  <div class="table-responsive">
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark text-center">
+            <tr>
+                <th>Kode Barang</th>
+                <th>Nama Barang</th>
+                <th>Harga Barang</th>
+                <th>Jumlah Stok</th>
+                <th>Foto</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            {% for u in stoks %}
+            <tr>
+                <td>{{ u.kode }}</td>
+                <td>{{ u.nama }}</td>
+                <td>{{ u.harga }}</td>
+                <td>{{ u.jumlah }}</td>
+                <td>
+                    {% if u.foto %}
+                        <img src="{{ url_for('static', filename='img/' + u.foto) }}" width="60">
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="/edit/{{ u.id }}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="/delete/{{ u.id }}" class="btn btn-sm btn-danger"
+                       onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- PAGINATION (SEJAJAR TABEL) -->
+    <nav>
+        <ul class="pagination mb-0">
+            {% if page > 1 %}
+            <li class="page-item">
+                <a class="page-link"
+                   href="?page={{ page - 1 }}&search={{ search }}">Previous</a>
+            </li>
+            {% endif %}
+
+            {% for p in range(1, total_pages + 1) %}
+            <li class="page-item {% if p == page %}active{% endif %}">
+                <a class="page-link"
+                   href="?page={{ p }}&search={{ search }}">{{ p }}</a>
+            </li>
+            {% endfor %}
+
+            {% if page < total_pages %}
+            <li class="page-item">
+                <a class="page-link"
+                   href="?page={{ page + 1 }}&search={{ search }}">Next</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+</div>
+
+
+
+
+</body>
+</html>
