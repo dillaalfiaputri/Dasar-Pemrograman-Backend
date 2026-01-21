@@ -8,8 +8,39 @@
 </head>
 <body>
     <div class="container mt-4">
-        <h1 align="center">Daftar Barang UMKM</h1>
-        <a href="{{ url_for('add') }}" class="btn btn-primary mb-3">Tambah Barang</a>
+        <h1 align="center">
+            <a href="{{ url_for('index') }}" class="judul-apotik">
+                APOTIK VIA
+            </a>
+        </h1>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    
+    <!-- Tombol Tambah Barang (Kiri) -->
+    <a href="{{ url_for('add') }}" class="btn btn-primary">
+        Tambah Barang
+    </a>
+
+    <!-- Form Cari (Kanan) -->
+    <form method="GET" action="{{ url_for('index') }}" style="width: 300px;">
+        <div class="input-group">
+            <input 
+                type="text" 
+                name="search" 
+                class="form-control"
+                placeholder="Cari nama barang..."
+                value="{{ search_query }}"
+            >
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">
+                    Cari
+                </button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -17,6 +48,10 @@
                     <th>Nama Barang</th>
                     <th>Harga Barang</th>
                     <th>Jumlah Stok</th>
+                    <th>Terjual</th>
+                    <th>Kategori</th>
+                    <th>PT</th>
+                    <th>Deskripsi</th>
                     <th>Foto</th>
                     <th>Aksi</th>
                 </tr>
@@ -24,20 +59,33 @@
             <tbody>
                 {% for item in items %}
                 <tr>
-                    <td>{{ item['kode'] }}</td>
-                    <td>{{ item['nama'] }}</td>
-                    <td>{{ item['harga'] }}</td>
-                    <td>{{ item['jumlah'] }}</td>
+                    <td>{{ item.kode if item.kode else '-' }}</td>
+                    <td>{{ item.nama }}</td>
+                    <td>{{ item.harga }}</td>
+                    <td>{{ item.jumlah if item.jumlah else '-' }}</td>
+                    <td>{{ item.terjual if item.terjual is defined else 0 }}</td>
+                    <td>{{ item.kategori if item.kategori else '-' }}</td>
+                    <td>{{ item.pt if item.pt else '-' }}</td>
+<td>
+    {% if item.deskripsi is defined %}
+        {{ item.deskripsi[:50] }}{% if item.deskripsi|length > 50 %}...{% endif %}
+    {% else %}
+        <span class="text-muted">Tidak ada deskripsi</span>
+    {% endif %}
+
+</td>
+
                     <td>
-                        {% if item['foto'] %}
-                        <img src="{{ url_for('static', filename='uploads/' + item['foto']) }}" alt="Foto" style="width: 50px; height: 50px; object-fit: cover;">
+                        {% if item.foto %}
+                            <img src="{{ url_for('static', filename=item.foto) }}" width="60">
                         {% else %}
-                        <span class="text-muted">Tidak ada foto</span>
+                            Tidak ada foto
                         {% endif %}
-                    </td>
                     <td>
-                        <a href="{{ url_for('edit', id=item['_id']) }}" class="btn btn-warning btn-sm">Update</a>
-                        <a href="{{ url_for('delete', id=item['_id']) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Hapus</a>
+                        <a href="{{ url_for('edit', id=item._id) }}" class="btn btn-warning btn-sm">Update</a>
+                        <a href="{{ url_for('delete', id=item._id) }}"
+                            class="btn btn-danger btn-sm"
+                            onclick="return confirm('Hapus data?')">Hapus</a>
                     </td>
                 </tr>
                 {% endfor %}
